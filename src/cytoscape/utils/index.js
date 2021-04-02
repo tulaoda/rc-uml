@@ -15,7 +15,7 @@ const tableTemplate = {
     locked: false,
     grabbable: true,
     pannable: false,
-    classes: 'table',
+    classes: ['table'],
 }
 
 const headerTemplate = {
@@ -33,7 +33,7 @@ const headerTemplate = {
     locked: false,
     grabbable: false,
     pannable: false,
-    classes: 'header',
+    classes: ['header'],
 }
 
 const columnTemplate = {
@@ -53,7 +53,7 @@ const columnTemplate = {
     locked: false,
     grabbable: false,
     pannable: false,
-    classes: 'column',
+    classes: ['column'],
 }
 
 class Uml {
@@ -92,36 +92,41 @@ class Uml {
                 const columnNode = _.cloneDeep(columnTemplate)
                 columnNode.data = item
                 columnNode.data.parent = id
-                columnNode.data.id = item.guid || uuidv4()
+                columnNode.data.id = item.id
                 columnNode.data.name = item.name
                 columnNode.data.dataType = item.dataType
-                // columnNode.data.def = item.def
-                // columnNode.data.relation = item.relation
                 columnNode.renderedPosition = {
                     x,
                     y: y + (currColumnIndex + 1) * 30 + 10,
                 }
-                // if (item.primary) {
-                columnNode.classes = ['column', 'table-primary']
-                // }
+                if (item.primary) {
+                    columnNode.classes = ['column', 'table-primary']
+                }
 
                 if (element.columns.length - 1 === currColumnIndex) {
                     columnNode.classes.push('last-column')
                 }
-                if (item.relation) {
-                    edges.push({
-                        group: 'edges',
-                        data: {
-                            id: uuidv4(),
-                            target: item.guid || uuidv4(),
-                            source: item.relation.column.guid,
-                            tableIndex: currTableIndex,
-                            columnIndex: currColumnIndex,
-                            type: 'pk',
-                            sourceTableName: item.relation.table.name,
-                            targetTableName: element.name,
-                        },
-                        classes: ['foreign-key-relation'],
+                if (item.relations) {
+                    item.relations.forEach((itemRelation) => {
+                        let classes = ['normal']
+                        if (itemRelation.column.type === 'mapping') {
+                            classes = ['mapping']
+                        }
+                        edges.push({
+                            group: 'edges',
+                            data: {
+                                id: uuidv4(),
+                                target: item.id || uuidv4(),
+                                source: itemRelation.column.id,
+                                tableIndex: currTableIndex,
+                                columnIndex: currColumnIndex,
+                                type: itemRelation.type,
+                                sourceTableName: itemRelation.table.tableName,
+                                targetTableName: element.tableName,
+                                sourceArrow: element.position.x > itemRelation.table.x ? 1 : 0,
+                            },
+                            classes: classes,
+                        })
                     })
                 }
                 tableArr.push(columnNode)
