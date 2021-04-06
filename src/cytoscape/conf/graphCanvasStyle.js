@@ -74,6 +74,15 @@ const style = {
         'text-margin-y': '-8px',
         shape: 'round-rectangle',
     },
+    'node.main-table-header': {
+        'border-width': 0,
+        'background-color': '#1890ff',
+        color: '#fff',
+        height: '40px',
+        opacity: 1,
+        'text-margin-y': '-8px',
+        shape: 'round-rectangle',
+    },
     'node.column': {
         width: '200px',
         'border-width': 0.1,
@@ -103,15 +112,16 @@ const style = {
         width: '2px',
         // 'line-color': '#cccccc',
         content: 'data(label)',
-        // 'z-index-compare': 'manual',
         color: '#cccccc',
         'font-size': '16px',
         'min-zoomed-font-size': '12px',
         'edge-text-rotation': 'autorotate',
         'curve-style': 'unbundled-bezier',
-        // 'text-background-color': '#f6f7f9',
-        // 'text-background-opacity': '0',
-        // 'z-compound-depth': 'top',
+        'text-background-color': '#fff',
+        'text-background-shape': 'roundrectangle',
+        'text-background-padding': '2px',
+        'text-background-opacity': 1, // 文字背景色显示，默认是0
+        'z-compound-depth': 'top',
         // 'target-arrow-shape': 'triangle',
         // 'source-arrow-shape': 'circle',
         // 'text-background-shape': 'roundrectangle',
@@ -119,7 +129,7 @@ const style = {
         // 'target-arrow-fill': 'hollow',
         // 'source-arrow-fill': 'hollow',
         // ghost: 'yes',
-        // 'ghost-opacity': 1
+        'ghost-opacity': 1,
     },
     'edge:selected': {
         'line-color': '#cccccc',
@@ -140,11 +150,11 @@ const style = {
         'target-arrow-shape': 'circle',
         'source-arrow-shape': 'circle',
         'source-endpoint': (ele) => {
-            const deg = ele.data().sourceArrow === 0 ? '90deg' : '270deg'
+            const deg = ele.data().relativePositon === 0 ? '90deg' : '270deg'
             return deg
         },
         'target-endpoint': (ele) => {
-            const deg = ele.data().sourceArrow === 0 ? '270deg' : '90deg'
+            const deg = ele.data().targetArrow === 0 ? '270deg' : '90deg'
             return deg
         },
     },
@@ -153,11 +163,11 @@ const style = {
         'target-arrow-shape': 'triangle',
         'source-arrow-shape': 'circle',
         'source-endpoint': (ele) => {
-            const deg = ele.data().sourceArrow === 0 ? '90deg' : '270deg'
+            const deg = ele.data().relativePositon === 1 ? '90deg' : '270deg'
             return deg
         },
         'target-endpoint': (ele) => {
-            const deg = ele.data().sourceArrow === 0 ? '270deg' : '90deg'
+            const deg = ele.data().relativePositon === 1 ? '270deg' : '90deg'
             return deg
         },
     },

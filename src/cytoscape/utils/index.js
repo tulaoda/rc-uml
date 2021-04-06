@@ -63,84 +63,91 @@ class Uml {
             return { nodes: [], edges: [] }
         }
         const tmpTables = _.cloneDeep(tables)
-        const tableArr = []
+        const tableList = []
         const edges = []
         // 表处理 sql相关
-        tmpTables.forEach((element, currTableIndex) => {
+        tmpTables.forEach((currentTable, currentTableIndex) => {
             const tableNode = _.cloneDeep(tableTemplate)
             const headerNode = _.cloneDeep(headerTemplate)
-            const { id } = element
-            tableNode.data.id = element.id
-            tableNode.data.tableName = element.tableName
-            // tableNode.data.type = element.type
-            tableNode.renderedPosition = element.position
-            tableArr.push(tableNode)
+            const { id } = currentTable
+            tableNode.data.id = currentTable.id
+            tableNode.data.tableName = currentTable.tableName
+            // tableNode.data.type = currentTable.type
+            tableNode.renderedPosition = currentTable.position
+            tableList.push(tableNode)
 
-            const { x, y } = element.position
+            const { x, y } = currentTable.position
             headerNode.data.id = uuidv4()
-            headerNode.data.name = element.tableName
+            headerNode.data.name = currentTable.tableName
             headerNode.data.parent = id
             headerNode.renderedPosition = {
                 x,
                 y: y + 20,
             }
-            tableArr.push(headerNode)
-            if (!Array.isArray(element.columns)) {
+            if (currentTable.main) {
+                headerNode.classes = ['main-table-header']
+            }
+
+            tableList.push(headerNode)
+            if (!Array.isArray(currentTable.columns)) {
                 return
             }
-            element.columns.forEach((item, currColumnIndex) => {
+
+            currentTable.columns.forEach((currentRow, currentColumnIndex) => {
                 const columnNode = _.cloneDeep(columnTemplate)
-                columnNode.data = item
+                columnNode.data = currentRow
                 columnNode.data.parent = id
-                columnNode.data.id = item.id
-                columnNode.data.name = item.name
-                columnNode.data.dataType = item.dataType
+                columnNode.data.id = currentRow.id
+                columnNode.data.name = currentRow.name
+                columnNode.data.dataType = currentRow.dataType
                 columnNode.renderedPosition = {
                     x,
-                    y: y + (currColumnIndex + 1) * 30 + 10,
-                }
-                if (item.primary) {
-                    columnNode.classes = ['column', 'table-primary']
+                    y: y + (currentColumnIndex + 1) * 30 + 10,
                 }
 
-                if (element.columns.length - 1 === currColumnIndex) {
+                if (currentTable.columns.length - 1 === currentColumnIndex) {
                     columnNode.classes.push('last-column')
                 }
-                if (item.relations) {
-                    item.relations.forEach((itemRelation) => {
+                if (currentRow.relations) {
+                    currentRow.relations.forEach((itemRelation) => {
                         let classes = ['normal']
                         if (itemRelation.column.type === 'mapping') {
                             classes = ['mapping']
                         }
+                        const sourceTable = tmpTables.find((item) => item.id === itemRelation.table.id)
+
+                        console.log(`sourceTable`, sourceTable)
+
                         edges.push({
                             group: 'edges',
                             data: {
                                 id: uuidv4(),
-                                target: item.id || uuidv4(),
+                                target: currentRow.id || uuidv4(),
                                 source: itemRelation.column.id,
-                                tableIndex: currTableIndex,
-                                columnIndex: currColumnIndex,
+                                tableIndex: currentTableIndex,
+                                columnIndex: currentColumnIndex,
                                 type: itemRelation.type,
+                                label: itemRelation.relationLabel,
                                 sourceTableName: itemRelation.table.tableName,
-                                targetTableName: element.tableName,
-                                sourceArrow: element.position.x > itemRelation.table.x ? 1 : 0,
+                                targetTableName: currentTable.tableName,
+                                relativePositon: currentTable.position.x > sourceTable.position.x ? 1 : 0,
                             },
                             classes: classes,
                         })
                     })
                 }
-                tableArr.push(columnNode)
+                tableList.push(columnNode)
             })
         })
         // 表关系处理 不涉及sql
-        tableRelations.forEach((item) => {
-            edges.push(item)
+        tableRelations.forEach((currentRow) => {
+            edges.push(currentRow)
         })
         // 行关系处理 不涉及sql
-        rowRelations.forEach((item) => {
-            edges.push(item)
+        rowRelations.forEach((currentRow) => {
+            edges.push(currentRow)
         })
-        return { nodes: tableArr, edges }
+        return { nodes: tableList, edges }
     }
 }
 
