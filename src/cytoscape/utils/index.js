@@ -85,7 +85,7 @@ class Uml {
                 y: y + 20,
             }
             if (currentTable.main) {
-                headerNode.classes = ['main-table-header']
+                headerNode.classes = ['header', 'main-table-header']
             }
 
             tableList.push(headerNode)
@@ -130,7 +130,7 @@ class Uml {
                                 label: itemRelation.relationLabel,
                                 sourceTableName: itemRelation.table.tableName,
                                 targetTableName: currentTable.tableName,
-                                relativePositon: currentTable.position.x > sourceTable.position.x ? 1 : 0,
+                                relativePosition: currentTable.position.x > sourceTable.position.x ? 1 : 0,
                             },
                             classes: classes,
                         })

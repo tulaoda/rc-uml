@@ -56,7 +56,6 @@ const style = {
     'node.table': {
         width: '200px',
         shape: 'round-rectangle',
-        // padding: '1px',
         'border-width': 8,
         'border-color': '#666666',
         // 'z-compound-depth': 'top',
@@ -66,6 +65,7 @@ const style = {
         'border-color': '#1890ff',
     },
     'node.header': {
+        width: '200px',
         'border-width': 0,
         'background-color': '#000000',
         color: '#fff',
@@ -75,18 +75,12 @@ const style = {
         shape: 'round-rectangle',
     },
     'node.main-table-header': {
-        'border-width': 0,
         'background-color': '#1890ff',
-        color: '#fff',
-        height: '40px',
-        opacity: 1,
-        'text-margin-y': '-8px',
-        shape: 'round-rectangle',
     },
     'node.column': {
         width: '200px',
         'border-width': 0.1,
-        height: '30px',
+        // height: '30px',
         'background-color': '#FEFEFE',
         content: (ele) => `${ele.data('name')}`,
         'border-opacity': 0.5,
@@ -122,19 +116,20 @@ const style = {
         'text-background-padding': '2px',
         'text-background-opacity': 1, // 文字背景色显示，默认是0
         'z-compound-depth': 'top',
-        // 'target-arrow-shape': 'triangle',
+        // 'target-arrow-shape': 'triangle',˜
         // 'source-arrow-shape': 'circle',
         // 'text-background-shape': 'roundrectangle',
-        'arrow-scale': 1,
+        'arrow-scale': 0.8,
         // 'target-arrow-fill': 'hollow',
         // 'source-arrow-fill': 'hollow',
         // ghost: 'yes',
         'ghost-opacity': 1,
     },
     'edge:selected': {
-        'line-color': '#cccccc',
-        'target-arrow-color': '#cccccc',
-        'background-color': '#cccccc',
+        'line-color': '#1890ff',
+        'target-arrow-color': '#1890ff',
+        'source-arrow-color': '#1890ff',
+        'background-color': '#1890ff',
     },
     'edge.table-relation': {
         'line-color': '#000000',
@@ -150,7 +145,7 @@ const style = {
         'target-arrow-shape': 'circle',
         'source-arrow-shape': 'circle',
         'source-endpoint': (ele) => {
-            const deg = ele.data().relativePositon === 0 ? '90deg' : '270deg'
+            const deg = ele.data().relativePosition === 0 ? '90deg' : '270deg'
             return deg
         },
         'target-endpoint': (ele) => {
@@ -159,15 +154,14 @@ const style = {
         },
     },
     'edge.mapping': {
-        'line-color': '#1890ff',
         'target-arrow-shape': 'triangle',
         'source-arrow-shape': 'circle',
         'source-endpoint': (ele) => {
-            const deg = ele.data().relativePositon === 1 ? '90deg' : '270deg'
+            const deg = ele.data().relativePosition === 1 ? '90deg' : '270deg'
             return deg
         },
         'target-endpoint': (ele) => {
-            const deg = ele.data().relativePositon === 1 ? '270deg' : '90deg'
+            const deg = ele.data().relativePosition === 1 ? '270deg' : '90deg'
             return deg
         },
     },

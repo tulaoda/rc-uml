@@ -3959,6 +3959,20 @@ cytoscape-d3-force@^1.1.4:
   dependencies:
     d3-force "^2.0.1"
 
+cytoscape-grid-guide@^2.3.2:
+  version "2.3.2"
+  resolved "http://npm.po.mlamp.cn/cytoscape-grid-guide/-/cytoscape-grid-guide-2.3.2.tgz#08d113905b0968cc49765d55abbcfef807ab8fbc"
+  integrity sha512-ORa9woKE3fXUZxA7RVZEuNsBgwPxicxFGeBn15Cvtuh0le3Gn4IguXxp34pMDNa2VOpY+5+YPnRW3+tVHGM6yQ==
+  dependencies:
+    functional-red-black-tree "^1.0.1"
+
+cytoscape-klay@^3.1.4:
+  version "3.1.4"
+  resolved "http://npm.po.mlamp.cn/cytoscape-klay/-/cytoscape-klay-3.1.4.tgz#0e5bbb5c482b384b2ff2485150173aaecebc324b"
+  integrity sha1-Dlu7XEgrOEsv8khRUBc6rs68Mks=
+  dependencies:
+    klayjs "^0.4.1"
+
 cytoscape-navigator@^2.0.1:
   version "2.0.1"
   resolved "http://npm.po.mlamp.cn/cytoscape-navigator/-/cytoscape-navigator-2.0.1.tgz#c3b82a5329e5e561d91992f6162ea576c03fa7c4"
@@ -6978,6 +6992,11 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
+
+klayjs@^0.4.1:
+  version "0.4.1"
+  resolved "http://npm.po.mlamp.cn/klayjs/-/klayjs-0.4.1.tgz#5bf9fadc7a3e44b94082bba501e7d803076dcfc2"
+  integrity sha1-W/n63Ho+RLlAgrulAefYAwdtz8I=
 
 kleur@^3.0.3:
   version "3.0.3"
